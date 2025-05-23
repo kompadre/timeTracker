@@ -1,0 +1,148 @@
+/* Main stylesheet */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 300px;
+}
+h2 {
+    text-align: center;
+    color: #333;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+input[type="text"],
+input[type="password"] {
+    width: calc(100% - 22px); /* Account for padding and border */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+.error {
+    color: red;
+    background-color: #ffe0e0;
+    border: 1px solid red;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    text-align: center;
+}
+p {
+    text-align: center;
+    font-size: 0.9em;
+}
+
+/* Styles for index.php */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20px;
+}
+.header h1 {
+    margin: 0;
+    font-size: 1.5em; /* Adjusted for better visual hierarchy */
+}
+.header a {
+    text-decoration: none;
+    color: #007bff;
+}
+.header a:hover {
+    text-decoration: underline;
+}
+
+.status-clocked-in {
+    color: green;
+    font-weight: bold;
+}
+.status-clocked-out {
+    color: red;
+    font-weight: bold;
+}
+
+.time-tracking-form button {
+    margin-top: 10px;
+}
+
+.info {
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: #555;
+    text-align: left; /* Align info text to the left for better readability */
+}
+
+#todays-summary h3,
+#work-history h3 {
+    margin-top: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+/* Make the container on index.php wider */
+body > .container { /* Target only the main page container, not login */
+    width: 500px;
+}
+
+#todays-summary { margin-top: 30px; }
+#work-history { margin-top: 30px; }
+
+/* Styles for history table */
+#work-history table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+#work-history th, #work-history td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+#work-history th {
+    background-color: #f2f2f2;
+}
+
+/* Styles for today's summary list */
+#todays-summary ul {
+    list-style: none;
+    padding-left: 0;
+}
+#todays-summary li {
+    background-color: #f9f9f9;
+    padding: 8px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    border: 1px solid #eee;
+}
+#todays-summary p strong {
+    display: block;
+    margin-top: 10px;
+    font-size: 1.1em;
+}
