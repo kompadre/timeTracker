@@ -29,8 +29,11 @@ try {
             exit;
         }
 
-        $stmt = $pdo->prepare("INSERT INTO work_hours (user_id, start_time) VALUES (?, NOW())");
-        $stmt->execute([$user_id]);
+        $task_description = trim($_POST['task_description'] ?? '');
+        $task_description = $task_description === '' ? null : $task_description;
+
+        $stmt = $pdo->prepare("INSERT INTO work_hours (user_id, start_time, task_description) VALUES (?, NOW(), ?)");
+        $stmt->execute([$user_id, $task_description]);
 
     } elseif ($action === "clock_out") {
         $work_entry_id = $_POST['work_entry_id'] ?? null;

@@ -34,7 +34,7 @@ try {
 $todays_entries = [];
 $total_today_seconds = 0;
 try {
-    $stmt_today = $pdo->prepare("SELECT start_time, end_time FROM work_hours WHERE user_id = ? AND DATE(start_time) = CURDATE() ORDER BY start_time ASC");
+    $stmt_today = $pdo->prepare("SELECT start_time, end_time, task_description FROM work_hours WHERE user_id = ? AND DATE(start_time) = CURDATE() ORDER BY start_time ASC");
     $stmt_today->execute([$user_id]);
     $todays_entries = $stmt_today->fetchAll();
 
@@ -52,7 +52,7 @@ try {
 
 $history_entries = [];
 try {
-    $stmt_history = $pdo->prepare("SELECT start_time, end_time FROM work_hours WHERE user_id = ? ORDER BY start_time DESC LIMIT 30");
+    $stmt_history = $pdo->prepare("SELECT start_time, end_time, task_description FROM work_hours WHERE user_id = ? ORDER BY start_time DESC LIMIT 30");
     $stmt_history->execute([$user_id]);
     $history_entries = $stmt_history->fetchAll();
 } catch (PDOException $e) {
@@ -99,6 +99,10 @@ function format_seconds_to_hms(int $seconds): string {
 
         <form class="time-tracking-form" action="track.php" method="post">
             <?php if ($current_status === "Clocked Out"): ?>
+                <div>
+                    <label for="task_description">Task Description (Optional):</label>
+                    <input type="text" name="task_description" id="task_description" maxlength="255" style="width: calc(100% - 22px); padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
                 <button type="submit" name="action" value="clock_in">Clock In</button>
             <?php else: // Clocked In ?>
                 <input type="hidden" name="work_entry_id" value="<?php echo htmlspecialchars($current_work_entry_id); ?>">
@@ -117,6 +121,7 @@ function format_seconds_to_hms(int $seconds): string {
                             <?php echo htmlspecialchars(date('H:i:s', strtotime($entry['start_time']))); ?> - 
                             <?php echo $entry['end_time'] ? htmlspecialchars(date('H:i:s', strtotime($entry['end_time']))) : 'Ongoing'; ?>
                             (<?php echo calculate_interval_formatted($entry['start_time'], $entry['end_time']); ?>)
+                            <br><em style="font-size: 0.9em; color: #555;"><?php echo $entry['task_description'] ? 'Task: ' . htmlspecialchars($entry['task_description']) : 'Task: No description'; ?></em>
                         </li>
                     <?php endforeach; ?>
                 </ul>
@@ -136,6 +141,7 @@ function format_seconds_to_hms(int $seconds): string {
                             <th>Start Time</th>
                             <th>End Time</th>
                             <th>Duration</th>
+                            <th>Task Description</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -145,6 +151,7 @@ function format_seconds_to_hms(int $seconds): string {
                                 <td><?php echo htmlspecialchars(date('H:i:s', strtotime($entry['start_time']))); ?></td>
                                 <td><?php echo $entry['end_time'] ? htmlspecialchars(date('H:i:s', strtotime($entry['end_time']))) : 'N/A'; ?></td>
                                 <td><?php echo calculate_interval_formatted($entry['start_time'], $entry['end_time']); ?></td>
+                                <td><?php echo $entry['task_description'] ? htmlspecialchars($entry['task_description']) : 'N/A'; ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

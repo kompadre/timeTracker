@@ -16,6 +16,7 @@ CREATE TABLE `work_hours` (
   `user_id` INT NOT NULL, -- Foreign key referencing the user who logged the hours
   `start_time` DATETIME NOT NULL, -- Timestamp when the work period started
   `end_time` DATETIME NULL, -- Timestamp when the work period ended (can be NULL if ongoing)
+  `task_description` VARCHAR(255) DEFAULT NULL, -- Optional description of the task performed
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Timestamp of work hour entry creation
   FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE -- Ensures data integrity; if a user is deleted, their work hours are also deleted.
 );
